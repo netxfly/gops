@@ -23,8 +23,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/google/gops/internal"
-	"github.com/google/gops/signal"
+	"gops/signal"
+	"gops/internal"
+
 	"github.com/kardianos/osext"
 )
 

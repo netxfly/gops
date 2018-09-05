@@ -14,7 +14,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/google/gops/goprocess"
+	"gops/goprocess"
+
 	"github.com/shirou/gopsutil/process"
 	"github.com/xlab/treeprint"
 )
