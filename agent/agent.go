@@ -24,8 +24,7 @@ import (
 	"time"
 
 	"gops/signal"
-	"gops/internal"
-
+	"gops/util"
 	"github.com/kardianos/osext"
 )
 
@@ -77,7 +76,7 @@ func Listen(opts Options) error {
 	// new
 	gopsdir := opts.ConfigDir
 	if gopsdir == "" {
-		cfgDir, err := internal.ConfigDir()
+		cfgDir, err := util.ConfigDir()
 		if err != nil {
 			return err
 		}
