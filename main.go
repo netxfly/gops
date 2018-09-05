@@ -60,7 +60,7 @@ func main() {
 	if cmd == "help" {
 		usage("")
 	}
-	
+
 }
 
 func processes() {

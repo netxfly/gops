@@ -41,7 +41,6 @@ func FindAll() []P {
 	found := make(chan P)
 
 	for _, pr := range pss {
-		pr := pr
 		go func() {
 			defer wg.Done()
 			path, err := getPath(pr)
@@ -62,10 +61,12 @@ func FindAll() []P {
 			}
 		}()
 	}
+
 	go func() {
 		wg.Wait()
 		close(found)
 	}()
+
 	var results []P
 	for p := range found {
 		results = append(results, p)
