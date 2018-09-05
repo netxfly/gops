@@ -6,23 +6,27 @@
 package goprocess
 
 import (
-	"os"
 	"sync"
+	"os/user"
 
-	goversion "rsc.io/goversion/version"
-
-	"github.com/google/gops/internal"
-	ps "github.com/keybase/go-ps"
+	"github.com/keybase/go-ps"
+	"github.com/shirou/gopsutil/net"
+	"github.com/shirou/gopsutil/process"
 )
 
 // P represents a Go process.
 type P struct {
-	PID          int
-	PPID         int
-	Exec         string
-	Path         string
-	BuildVersion string
-	Agent        bool
+	PID              int
+	PPID             int
+	Exec             string
+	Path             string
+	Uid              string
+	Username         string
+	Arguments        string
+	ConnectionStates []net.ConnectionStat
+
+	// 把用户名与参数也加到这里来
+	// processInfo的结果集成进来，由FindAll统一处理完
 }
 
 // FindAll returns all the Go processes currently running on this host.
@@ -40,21 +44,21 @@ func FindAll() []P {
 		pr := pr
 		go func() {
 			defer wg.Done()
-
-			path, version, agent, ok, err := isGo(pr)
-			if err != nil {
-				// TODO(jbd): Return a list of errors.
-			}
-			if !ok {
-				return
-			}
-			found <- P{
-				PID:          pr.Pid(),
-				PPID:         pr.PPid(),
-				Exec:         pr.Executable(),
-				Path:         path,
-				BuildVersion: version,
-				Agent:        agent,
+			path, err := getPath(pr)
+			if err == nil {
+				uid, username, argument, connStates, err := getProcessInfo(pr.Pid())
+				if err == nil {
+					found <- P{
+						PID:              pr.Pid(),
+						PPID:             pr.PPid(),
+						Exec:             pr.Executable(),
+						Path:             path,
+						Uid:              uid,
+						Username:         username,
+						Arguments:        argument,
+						ConnectionStates: connStates,
+					}
+				}
 			}
 		}()
 	}
@@ -70,49 +74,41 @@ func FindAll() []P {
 }
 
 // Find finds info about the process identified with the given PID.
-func Find(pid int) (p P, ok bool, err error) {
+func Find(pid int) (p P, err error) {
 	pr, err := ps.FindProcess(pid)
-	if err != nil {
-		return P{}, false, err
-	}
-	path, version, agent, ok, err := isGo(pr)
-	if !ok {
-		return P{}, false, nil
-	}
+	path, err := getPath(pr)
+	uid, username, argument, connStates, err := getProcessInfo(pid)
 	return P{
-		PID:          pr.Pid(),
-		PPID:         pr.PPid(),
-		Exec:         pr.Executable(),
-		Path:         path,
-		BuildVersion: version,
-		Agent:        agent,
-	}, true, nil
+		PID:              pr.Pid(),
+		PPID:             pr.PPid(),
+		Exec:             pr.Executable(),
+		Path:             path,
+		Uid:              uid,
+		Username:         username,
+		Arguments:        argument,
+		ConnectionStates: connStates,
+	}, err
 }
 
 // isGo looks up the runtime.buildVersion symbol
 // in the process' binary and determines if the process
 // if a Go process or not. If the process is a Go process,
 // it reports PID, binary name and full path of the binary.
-func isGo(pr ps.Process) (path, version string, agent, ok bool, err error) {
-	if pr.Pid() == 0 {
-		// ignore system process
-		return
-	}
+func getPath(pr ps.Process) (path string, err error) {
 	path, err = pr.Path()
-	if err != nil {
-		return
-	}
-	var versionInfo goversion.Version
-	versionInfo, err = goversion.ReadExe(path)
-	if err != nil {
-		return
-	}
-	ok = true
-	version = versionInfo.Release
-	pidfile, err := internal.PIDFile(pr.Pid())
+	return path, err
+}
+
+func getProcessInfo(pid int) (string, string, string, []net.ConnectionStat, error) {
+	var uid string
+	p, err := process.NewProcess(int32(pid))
+	username, err := p.Username()
+	user, err := user.Lookup(username)
 	if err == nil {
-		_, err := os.Stat(pidfile)
-		agent = err == nil
+		uid = user.Uid
 	}
-	return path, version, agent, ok, nil
+	argument, err := p.Cmdline()
+	connStates, err := p.Connections()
+
+	return uid, username, argument, connStates, err
 }
