@@ -41,6 +41,7 @@ func FindAll() []P {
 	found := make(chan P)
 
 	for _, pr := range pss {
+		pr := pr
 		go func() {
 			defer wg.Done()
 			path, err := getPath(pr)
