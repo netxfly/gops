@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7c7b6aae-9728-4f8c-bc0b-2bafaf6e2b6d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/agent/agent.go" beforeDir="false" afterPath="$PROJECT_DIR$/agent/agent.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/internal.go" beforeDir="false" afterPath="$PROJECT_DIR$/util/internal.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/internal_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/util/internal_test.go" afterDir="false" />
-    </list>
+    <list default="true" id="7c7b6aae-9728-4f8c-bc0b-2bafaf6e2b6d" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -77,13 +73,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="internal_test.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="internal_test.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/util/internal_test.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="350">
               <caret line="14" column="33" lean-forward="true" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
               <folding>
                 <element signature="e#18#45#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1326">
+              <caret line="62" column="4" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="4" />
+              <folding>
+                <element signature="e#240#415#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -100,6 +108,11 @@
       </file>
     </leaf>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>internal</find>
+    </findStrings>
+  </component>
   <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -107,12 +120,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/examples/hello/main.go" />
         <option value="$PROJECT_DIR$/cmd.go" />
         <option value="$PROJECT_DIR$/agent/agent.go" />
         <option value="$PROJECT_DIR$/util/internal.go" />
         <option value="$PROJECT_DIR$/util/internal_test.go" />
+        <option value="$PROJECT_DIR$/main.go" />
       </list>
     </option>
   </component>
@@ -253,16 +266,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1517">
-          <caret line="92" column="1" lean-forward="true" selection-start-line="92" selection-start-column="1" selection-end-line="92" selection-end-column="1" />
-          <folding>
-            <element signature="e#240#415#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/agent/agent.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1911">
@@ -326,6 +329,16 @@
           <caret line="14" column="33" lean-forward="true" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
           <folding>
             <element signature="e#18#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1326">
+          <caret line="62" column="4" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="4" />
+          <folding>
+            <element signature="e#240#415#0" expanded="true" />
           </folding>
         </state>
       </provider>
